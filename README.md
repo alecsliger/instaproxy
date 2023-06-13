@@ -20,7 +20,7 @@ Via Azure CLI or WebGUI, create the following resources inside a new resource gr
 
 Then, associate the resources like so:
 
-<ResourceVisualizer.jpg>
+![ResourceVisualizer](images/diagram.png)
 
 ## Step 4
 Update the following in the config files:
