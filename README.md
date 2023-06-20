@@ -36,6 +36,15 @@ Run the script and you are done
 ./redeploy.sh
 ```
 
+## Step 6
+
+SSH into your new proxy server, CD into the directory with your YAML config, and start NPM
+
+```bash
+cd ~
+docker-compose up -d
+```
+
 # Modifying Settings
 
 You can change various items in the ARM template and still retain the core functionality; Most Notably:
