@@ -62,6 +62,7 @@ systemd:
         WantedBy=multi-user.target
     - name: install-NPM.service
       enabled: true
+      contents: |
         [Unit]
         Description=Install a default NPM configuration file from my project files (Edit this before deploying please)
 
