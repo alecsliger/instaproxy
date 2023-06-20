@@ -51,6 +51,8 @@ Included with the template files is a folder called 'ignition'. This folder cont
 
 The default 'custom data' in the ARM template is the converted 'butane.yml' file in the aforementioned folder. This configuration simply adds 2GB of swap space to the OS so it can run on the Azure B1ls comfortably. I highly recommend that you leave this configuration in place, and add to it if needed. 
 
+Please note that during the development of this project, you may need to manually re-generate and update the ignition config into the 'custom-data' folder using the provided script, as it is one of the files that is updated most frequently. Sorry :p
+
 [The documentation for writing a Butane file for this version of Flatcar linux can be found here](https://coreos.github.io/butane/config-flatcar-v1_0/)
 
 ## Regions
