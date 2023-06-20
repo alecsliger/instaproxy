@@ -65,10 +65,12 @@ systemd:
       contents: |
         [Unit]
         Description=Install a default NPM configuration file from my project files (Edit this before deploying please)
+        Wants=network-online.target
+        After=network-online.target
 
         [Service]
         Type=oneshot
-        ExecStart=/usr/bin/curl -SL https://raw.githubusercontent.com/alecsliger/instaproxy/main/NPMdefault.yml -o /home/core/
+        ExecStart=/usr/bin/curl -SL https://raw.githubusercontent.com/alecsliger/instaproxy/main/NPMdefault.yml -o /home/core/NPMdefault.yml
         RemainAfterExit=true
 
         [Install]
