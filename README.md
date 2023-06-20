@@ -65,11 +65,11 @@ To change the tags of your newly created resources, you can simply run a Find fo
 
 ## Admin Username
 
-Changing the admin username in the parameters file should create a new user on the machine, and bind the ssh-key you added to said user. Changing this should be as simple as replacing 'core' with your chosen value.
+Changing the admin username in the parameters file should create a new user on the machine, and bind the ssh-key you added to said user. Changing this should be as simple as replacing 'core' with your chosen value. Note that the default user 'core' will have ownership of the docker-compose binary unless changed in the Ignition file
 
 ## Adding an rsync service for configuration files
 
-Append the following YAML code to your Butane.yml file, update the 'ExecStart=...' line with your rsync command, regenerate your ignition file with the provided script, and update the 'custom data' field in the parameters.json file:
+Append the following YAML code to your Butane.yml file, update the 'ExecStart=...' line with your rsync command, regenerate your ignition file with the provided script, and update the 'custom data' field in the parameters.json file: (Improvements in progress for this)
 
 ```yaml
     - name: rsync-npm-db.service
@@ -81,4 +81,7 @@ Append the following YAML code to your Butane.yml file, update the 'ExecStart=..
         Type=oneshot
         ExecStart=/usr/bin/rsync --COMMAND GOES HERE--
 ```
+## If you *aren't* using any existing configuration or database files...
+A default configuration should have been placed in the home directory of the core user (provided you didnt remove the service from the ignition file). I would not recommend running this file 'as-is' for longer than a day.
 
+[A guide to editing this file can be found on the NPM webpage](https://nginxproxymanager.com/setup/#running-the-app)

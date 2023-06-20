@@ -60,3 +60,17 @@ systemd:
 
         [Install]
         WantedBy=multi-user.target
+    - name: install-NPM.service
+      enabled: true
+        [Unit]
+        Description=Install a default NPM configuration file from my project files (Edit this before deploying please)
+
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/curl -SL https://raw.githubusercontent.com/alecsliger/instaproxy/main/NPMdefault.yml -o /home/core/
+        RemainAfterExit=true
+
+        [Install]
+        WantedBy=multi-user.target
+
+
