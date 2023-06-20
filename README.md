@@ -66,3 +66,19 @@ To change the tags of your newly created resources, you can simply run a Find fo
 ## Admin Username
 
 Changing the admin username in the parameters file should create a new user on the machine, and bind the ssh-key you added to said user. Changing this should be as simple as replacing 'core' with your chosen value.
+
+## Adding an rsync service for configuration files
+
+Append the following YAML code to your Butane.yml file, update the 'ExecStart=...' line with your rsync command, regenerate your ignition file with the provided script, and update the 'custom data' field in the parameters.json file:
+
+```yaml
+    - name: rsync-npm-db.service
+      contents: |
+        [Unit]
+        Description=Pull NPM DB and compose file(s) from external server
+
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/rsync --COMMAND GOES HERE--
+```
+
