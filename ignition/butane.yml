@@ -70,7 +70,7 @@ systemd:
 
         [Service]
         Type=oneshot
-        ExecStart=/usr/bin/curl -SL https://raw.githubusercontent.com/alecsliger/instaproxy/main/NPMdefault.yml -o /home/core/NPMdefault.yml
+        ExecStart=/usr/bin/curl -SL https://raw.githubusercontent.com/alecsliger/instaproxy/main/NPMdefault.yml -o /home/core/docker-compose.yml
         RemainAfterExit=true
 
         [Install]
