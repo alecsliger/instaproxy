@@ -5,7 +5,7 @@ The following short guide will allow you to create a simple Flatcar Linux VM ins
 ## Step 1
 Clone the files from this project and cd into the main directory
 ```bash
-git clone github.com/alecsliger/instaproxy
+git clone https://github.com/alecsliger/instaproxy
 ```
 ## Step 2
 Install Azure CLI
