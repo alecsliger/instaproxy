@@ -30,7 +30,7 @@ Update the following in the config files:
 
 ## Step 5
 
-Run the script and you are done
+Run the redeploy script. It works for both deployment and re-deployment
 
 ```bash
 ./redeploy.sh
