@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "value": "eastus" \\TODO: Update Region (Optional)
+            "value": "eastus" \\TODO: Update Region (Optional) and remove this comment
         },
         "networkInterfaceName": {
             "value": "ProxyNIC"
@@ -12,7 +12,7 @@
             "value": "default"
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/SUBSCRIPTION-ID-GOES-HERE/resourceGroups/ProxyRG/providers/Microsoft.Network/virtualNetworks/ProxyVNET" \\TODO: Add Subscription ID
+            "value": "/subscriptions/SUBSCRIPTION-ID-GOES-HERE/resourceGroups/ProxyRG/providers/Microsoft.Network/virtualNetworks/ProxyVNET" \\TODO: Add Subscription ID and remove this comment
         },
         "virtualMachineName": {
             "value": "ProxyVM"
@@ -39,7 +39,7 @@
             "value": "core"
         },
         "adminPublicKey": {
-            "value": "" \\TODO: Add public SSH key
+            "value": "" \\TODO: Add public SSH key and remove this comment
         },
         "customData": {
             "value": "eyJpZ25pdGlvbiI6eyJ2ZXJzaW9uIjoiMy4zLjAifSwic3RvcmFnZSI6eyJmaWxlcyI6W3sicGF0aCI6Ii9ldGMvc3lzY3RsLmQvODAtc3dhcHBpbmVzcy5jb25mIiwiY29udGVudHMiOnsiY29tcHJlc3Npb24iOiIiLCJzb3VyY2UiOiJkYXRhOix2bS5zd2FwcGluZXNzJTNEMTAifX1dfSwic3lzdGVtZCI6eyJ1bml0cyI6W3siY29udGVudHMiOiJbVW5pdF1cbkRlc2NyaXB0aW9uPVR1cm4gb24gc3dhcFxuUmVxdWlyZXM9Y3JlYXRlLXN3YXBmaWxlLnNlcnZpY2VcbkFmdGVyPWNyZWF0ZS1zd2FwZmlsZS5zZXJ2aWNlXG5cbltTd2FwXVxuV2hhdD0vdmFyL3ZtL3N3YXBmaWxlMVxuXG5bSW5zdGFsbF1cbldhbnRlZEJ5PW11bHRpLXVzZXIudGFyZ2V0XG4iLCJlbmFibGVkIjp0cnVlLCJuYW1lIjoidmFyLXZtLXN3YXBmaWxlMS5zd2FwIn0seyJjb250ZW50cyI6IltVbml0XVxuRGVzY3JpcHRpb249Q3JlYXRlIGEgc3dhcGZpbGVcblJlcXVpcmVzTW91bnRzRm9yPS92YXJcbkRlZmF1bHREZXBlbmRlbmNpZXM9bm9cblxuW1NlcnZpY2VdXG5UeXBlPW9uZXNob3RcbkV4ZWNTdGFydD0vdXNyL2Jpbi9ta2RpciAtcCAvdmFyL3ZtXG5FeGVjU3RhcnQ9L3Vzci9iaW4vZmFsbG9jYXRlIC1sIDIwNDhtIC92YXIvdm0vc3dhcGZpbGUxXG5FeGVjU3RhcnQ9L3Vzci9iaW4vY2htb2QgNjAwIC92YXIvdm0vc3dhcGZpbGUxXG5FeGVjU3RhcnQ9L3Vzci9zYmluL21rc3dhcCAvdmFyL3ZtL3N3YXBmaWxlMVxuUmVtYWluQWZ0ZXJFeGl0PXRydWUiLCJuYW1lIjoiY3JlYXRlLXN3YXBmaWxlLnNlcnZpY2UifV19fQo="
