@@ -41,8 +41,7 @@ Run the redeploy script. It works for both deployment and re-deployment
 SSH into your new proxy server, CD into the directory with your YAML config, and start NPM
 
 ```bash
-cd ~
-docker-compose up -d
+cd ~ && docker-compose up -d
 ```
 
 # Modifying Settings
@@ -56,11 +55,14 @@ You can change various items in the ARM template and still retain the core funct
 
 ## Ignition File
 
-Included with the template files is a folder called 'ignition'. This folder contains a script to convert a Butane.yml file to an ignition.json, and then into base64 for use in the template. 
+Included with the template files is a folder called 'ignition'. This folder contains a script to convert a Butane.yml file to an ignition.json, and then into base64 for use in the template. The default 'custom data' field in the ARM template is populated with the Ignition output from the included 'butane.yml' file in the aforementioned folder. This configuration adds:
 
-The default 'custom data' in the ARM template is the converted 'butane.yml' file in the aforementioned folder. This configuration simply adds 2GB of swap space to the OS so it can run on the Azure B1ls comfortably. I highly recommend that you leave this configuration in place, and add to it if needed. 
+- 2GB of swap space to the OS for running on the Azure B1ls 
+- A systemd service to install/update docker-compose on boot
+- A systemd service to download a 'default' Nginx Proxy Manager docker-compose file from this repo
+- A reboot strategy for automatic updates
 
-Please note that during the development of this project, you may need to manually re-generate and update the ignition config into the 'custom-data' folder using the provided script, as it is one of the files that is updated most frequently. Sorry :p
+I highly recommend that you leave the swap and update strategy configs in place to support system stability.
 
 [The documentation for writing a Butane file for this version of Flatcar linux can be found here](https://coreos.github.io/butane/config-flatcar-v1_0/)
 
