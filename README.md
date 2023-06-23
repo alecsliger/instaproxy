@@ -12,25 +12,29 @@ Install Azure CLI
 - [Microsoft's Guide](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 
 ## Step 3
-Via Azure CLI or WebGUI, create the following resources inside a new resource group:
-- Virtual Network (Name: ProxyVNET)
-- Public IP (Name: ProxyVM-ip)
-- Network Security Group (Allow your IP in on port 22)
-- Network Interface (Name: ProxyNIC)
+Deploy the prerequisite resource group via the provided script in 'RG-Deploy'. Before running, you will need to update the variables with:
+- A region (Must be the same region as the next steps)
+- The absolute paths to both the template.json and parameter.json files contained in the folder
+- Your public IP address for the NSG rule
 
-Then, associate the resources like so:
+Then, run the script. This step will only need to be completed *ONCE*
+```bash
+./RG-Deploy.sh
+```
+
+The newly created resources should be automatically associated like so:
 
 ![ResourceVisualizer](images/diagram.png)
 
 ## Step 4
 Update the following in the config files:
 
-- File paths in 'redeploy.sh' with the current location of both the template file and the parameters file
-- Azure Subscription ID, Public SSH key, and preferred Region in the parameters file
+- The absolute file paths in 'redeploy.sh' with the current location of both the flatcar.json file AND the flatcar.parameters.json file
+- Your Azure subscription ID, public SSH key, and preferred region in the flatcar.parameters.json file
 
 ## Step 5
 
-Run the redeploy script. It works for both deployment and re-deployment
+Run the redeploy.sh script. If you wish to destroy and reprovision the VM, simply run this script again
 
 ```bash
 ./redeploy.sh
