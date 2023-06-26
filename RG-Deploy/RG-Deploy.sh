@@ -4,8 +4,8 @@
 ## Update the region variable below to match the main arm template (Default=eastus), and the paths to the ARM files
 ## The fourth variable is for your IP address to allow SSH
 REGION="eastus2"
-TEMPLATEPATH="~/RG-Deploy/template.json"
-PARAMETERPATH="~/RG-Deploy/parameters.json"
+TEMPLATEPATH="./template.json"
+PARAMETERPATH="./parameters.json"
 SSHIP="1.2.3.4"
 
 # Create RG

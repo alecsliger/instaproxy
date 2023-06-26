@@ -14,12 +14,13 @@ Install Azure CLI
 ## Step 3
 Deploy the prerequisite resource group via the provided script in 'RG-Deploy'. Before running, you will need to update the variables with:
 - A region (Must be the same region as the next steps)
-- The absolute paths to both the template.json and parameter.json files contained in the folder
 - Your public IP address for the NSG rule
+- Verify the region in parameters.json matches your chosen region in the previous steps
 
-Then, run the script. This step will only need to be completed *ONCE*
+Then, run the script from inside the 'RG-Deploy' directory. This step will only need to be completed *ONCE*
+
 ```bash
-./RG-Deploy.sh
+cd RG-Deploy && chmod +x RG-Deploy.sh && ./RG-Deploy.sh
 ```
 
 The newly created resources should be automatically associated like so:
@@ -28,16 +29,16 @@ The newly created resources should be automatically associated like so:
 
 ## Step 4
 Update the following in the config files:
-
-- The absolute file paths in 'redeploy.sh' with the current location of both the flatcar.json file AND the flatcar.parameters.json file
-- Your Azure subscription ID, public SSH key, and preferred region in the flatcar.parameters.json file
+- Your Azure subscription ID
+- Public SSH key, 
+- Preferred region in the flatcar.parameters.json file (again, this must match your region from the previous steps)
 
 ## Step 5
 
-Run the redeploy.sh script. If you wish to destroy and reprovision the VM, simply run this script again
+Run the redeploy.sh script *from the root directory of the project*. If you wish to destroy and reprovision the VM, simply run this script again
 
 ```bash
-./redeploy.sh
+chmod +x redeploy.sh && ./redeploy.sh
 ```
 
 ## Step 6
@@ -90,6 +91,7 @@ Append the following YAML code to your Butane.yml file, update the 'ExecStart=..
 
 ```yaml
     - name: rsync-npm-db.service
+      enabled: true
       contents: |
         [Unit]
         Description=Pull NPM DB and compose file(s) from external server
