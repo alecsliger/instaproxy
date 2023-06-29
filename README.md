@@ -12,15 +12,21 @@ Install Azure CLI
 - [Microsoft's Guide](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 
 ## Step 3
-Deploy the prerequisite resource group via the provided script in 'RG-Deploy'. Before running, you will need to update the variables with:
-- A region (Must be the same region as the next steps)
-- Your public IP address for the NSG rule
-- Verify the region in parameters.json matches your chosen region in the previous steps
+Then, update the parameter variables in the 'redeploy.sh' script. 
 
-Then, run the script from inside the 'RG-Deploy' directory. This step will only need to be completed *ONCE*
+You will need to add your:
 
+- Preferred Region
+- Authorized IP address for SSH
+- Public SSH key
+- and Your Azure Subscription ID
+- (Optional: update tempate paths if moved)
+
+This step will only need to be completed *ONCE*
+
+Then, run the script with the options c, r, i, s, and p to update the template files and create the prerequisite group.
 ```bash
-cd RG-Deploy && chmod +x RG-Deploy.sh && ./RG-Deploy.sh
+chmod +x redeploy.sh && ./redeploy.sh -crisp
 ```
 
 The newly created resources should be automatically associated like so:
@@ -28,39 +34,49 @@ The newly created resources should be automatically associated like so:
 ![ResourceVisualizer](images/diagram.png)
 
 ## Step 4
-Update the following in the flatcar.parameters file:
-- Your Azure subscription ID
-- Public SSH key 
-- Preferred region (again, this must match your region from the previous steps)
 
-## Step 5
-
-Run the redeploy.sh script *from the root directory of the project*. If you wish to destroy and reprovision the VM, simply run this script again
+After the previous command has completed sucessfully, run the script again with the 'd' option to deploy the main template.
 
 ```bash
-chmod +x redeploy.sh && ./redeploy.sh
+./redeploy.sh -d
 ```
 
-## Step 6
+Re-provisioning the server is as simple as running this command again.
+
+## Step 5
 
 SSH into your new proxy server, CD into the directory with your YAML config, and start NPM
 
 ```bash
 cd ~ && docker-compose up -d
 ```
+Congratz
 
-# Modifying Settings
+# Details about the 'redeploy.sh' script
+OPTIONS:
+```
+  -p       Runs pre-deployment operations to create the resource group and dependency devices. You should only need to run this once
 
-You can change various items in the ARM template and still retain the core functionality; Most Notably:
+  -d      This option will destroy and reprovision your VM. This is a destructive operation, and any data not saved from your VM will be lost
 
-- The Ignition configuration in the 'Custom Data' field
-- Region of deployment (Must match resource group location and additional charges might apply)
-- Tags (in the main JSON file)
-- Admin username for SSH (Might get messy)
+  -r      Apply the region variable in this script to both parameter files for deployment
+
+  -i      Regenerate the Igniton config from Butane.yml and append result to the main parameters 'custom data' field
+
+  -s      Apply the SSH key variable in this script to the main parameter file
+
+  -c      Apply Azure subscription ID variable from this script to the main parameter file
+
+  -h      Show this menu
+```
+
+# Modifications
+
+You can change various items in the ARM template and still retain the core functionality of the project; Most notably, the Ignition configuration
 
 ## Ignition File
 
-Included with the template files is a folder called 'ignition'. This folder contains a script to convert a Butane.yml file to an ignition.json, and then into base64 for use in the template. The default 'custom data' field in the ARM template is populated with the Ignition output from the included 'butane.yml' file in the aforementioned folder. This configuration adds:
+Included with the template files is a YAML file called 'butane.yml'. This file contains all the additional parameters that structure the deployment of the read-only file system on the VM. By default, the 'custom data' field in the main ARM template is populated with the Ignition output from the file converted into base64 format. This configuration adds:
 
 - 2GB of swap space to the OS for running on the Azure B1ls 
 - A systemd service to install/update docker-compose on boot
@@ -73,21 +89,25 @@ I highly recommend that you leave the swap and update strategy configs in place 
 
 ## Regions
 
-Before deploying the project, you may want to change the region that azure deploys to. The resource group you create for this project must be created under your selected region, and the value in the parameter file updated to match. 
+Before deploying the project, you may want to change the region that azure deploys to. Updating the 'REGION' variable in the main script, and running it with the '-r' option will update all configs tied to this project with the input from the variable
 
 [A list of Azure regions and name 'codes' can be found in this article](https://azuretracks.com/2021/04/current-azure-region-names-reference/)
 
 ## Tags
 
-To change the tags of your newly created resources, you can simply run a Find for the string 'tags' in the flatcar.json file, and change them to your liking.
+To change the tags of your newly created resources, you can simply run a Find for the string 'tags' in the JSON files, and change them to your liking.
 
 ## Admin Username
 
-Changing the admin username in the parameters file should create a new user on the machine, and bind the ssh-key you added to said user. Changing this should be as simple as replacing 'core' with your chosen value. Note that the default user 'core' will have ownership of the docker-compose binary unless changed in the Ignition file
+Changing the admin username in the flatcar.parameters.json file should create a new user on the machine, and bind the ssh-key you added to said user. Changing this should be as simple as replacing 'core' with your chosen value. 
+
+Note that the default user 'core' will have ownership of the docker-compose binary unless changed in the Ignition file. 
+
+Permissions could also get quite messy, should you change this
 
 ## Adding an rsync service for configuration files
 
-Append the following YAML code to your Butane.yml file, update the 'ExecStart=...' line with your rsync command, regenerate your ignition file with the provided script, and update the 'custom data' field in the parameters.json file: (Improvements in progress for this)
+Append the following YAML code to your Butane.yml file, and update the 'ExecStart=...' line with your rsync command: (Improvements in progress for this)
 
 ```yaml
     - name: rsync-npm-db.service
@@ -100,6 +120,12 @@ Append the following YAML code to your Butane.yml file, update the 'ExecStart=..
         Type=oneshot
         ExecStart=/usr/bin/rsync --COMMAND GOES HERE--
 ```
+Then run the main script with the '-i' option to regenerate the Ignition file and convert it for use.
+
+```bash
+./redeploy.sh -i
+```
+
 ## If you *aren't* using any existing configuration or database files...
 A default configuration should have been placed in the home directory of the core user (provided you didnt remove the service from the ignition file). I would not recommend running this file 'as-is' for longer than a day.
 
