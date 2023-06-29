@@ -8,7 +8,7 @@ Clone the files from this project and cd into the main directory
 git clone https://github.com/alecsliger/instaproxy && cd instaproxy
 ```
 ## Step 2
-Install Azure CLI
+Install Azure CLI & login via command line
 - [Microsoft's Guide](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 
 and 
@@ -18,19 +18,26 @@ Install Docker
 - [Docker's Guide](https://docs.docker.com/engine/install/)
 
 ## Step 3
-Then, update the parameter variables in the 'redeploy.sh' script. 
+### This step and its prerequisites will only need to be completed once 
+You will need update the parameter variables in the 'redeploy.sh' script with your editor of choice with your:
+- Preferred Region (e.g "eastus")
+- Authorized IP address for SSH (e.g. "8.8.8.8")
+- Public SSH key (e.g. "ssh-rsa Aaaa111222333...")
+- and Your Azure Subscription ID (e.g AAAAA-BBBBBB-CCCCC-DDDDD)
+    - After logging in, you can run the below command and copy the string in quotes to get your ID
+    ```bash
+    az account show | grep id
+    ```
+- (Optionally: update paths to template files, if moved)
 
-You will need to add your:
-
-- Preferred Region
-- Authorized IP address for SSH
-- Public SSH key
-- and Your Azure Subscription ID
-- (Optional: update tempate paths if moved)
-
-This step will only need to be completed *ONCE*
-
-Then, run the script with the options c, r, i, s, and p to update the template files and create the prerequisite group.
+Don't forget to accept the terms of the Flatcar image:
+```bash
+az vm image terms show --urn kinvolk:flatcar-container-linux-free:stable-gen2:latest
+```
+```bash
+az vm image terms accept --urn kinvolk:flatcar-container-linux-free:stable-gen2:latest
+```
+Finally, run the script with the options c, r, i, s, and p to update the template files and create the prerequisite group.
 ```bash
 chmod +x redeploy.sh && ./redeploy.sh -crisp
 ```
