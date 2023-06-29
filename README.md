@@ -11,6 +11,12 @@ git clone https://github.com/alecsliger/instaproxy && cd instaproxy
 Install Azure CLI
 - [Microsoft's Guide](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 
+and 
+
+Install Docker
+
+- [Docker's Guide](https://docs.docker.com/engine/install/)
+
 ## Step 3
 Then, update the parameter variables in the 'redeploy.sh' script. 
 
@@ -55,7 +61,7 @@ Congratz
 # Details about the 'redeploy.sh' script
 OPTIONS:
 ```
-  -p       Runs pre-deployment operations to create the resource group and dependency devices. You should only need to run this once
+  -p      Runs pre-deployment operations to create the resource group and dependency devices. You should only need to run this once
 
   -d      This option will destroy and reprovision your VM. This is a destructive operation, and any data not saved from your VM will be lost
 
@@ -74,9 +80,9 @@ OPTIONS:
 
 You can change various items in the ARM template and still retain the core functionality of the project; Most notably, the Ignition configuration
 
-## Ignition File
+## Ignition
 
-Included with the template files is a YAML file called 'butane.yml'. This file contains all the additional parameters that structure the deployment of the read-only file system on the VM. By default, the 'custom data' field in the main ARM template is populated with the Ignition output from the file converted into base64 format. This configuration adds:
+Included with the template is a YAML file called 'butane.yml'. This file contains all the additional parameters that structure the deployment of the read-only file system on the VM. By default, the 'custom data' field in the main ARM template is populated with the Ignition output from the file converted into base64 format. This configuration adds:
 
 - 2GB of swap space to the OS for running on the Azure B1ls 
 - A systemd service to install/update docker-compose on boot
@@ -90,6 +96,10 @@ I highly recommend that you leave the swap and update strategy configs in place 
 ## Regions
 
 Before deploying the project, you may want to change the region that azure deploys to. Updating the 'REGION' variable in the main script, and running it with the '-r' option will update all configs tied to this project with the input from the variable
+
+```bash
+./redeploy.sh -r
+```
 
 [A list of Azure regions and name 'codes' can be found in this article](https://azuretracks.com/2021/04/current-azure-region-names-reference/)
 
